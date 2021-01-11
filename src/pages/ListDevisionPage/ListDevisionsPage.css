@@ -1,0 +1,47 @@
+.listDevisionPage__container { margin-top: 50px; }
+
+.listDevisionPage__header {
+    widows: 100%;
+    color: rgba(0, 0, 0, 0.7);;
+    display: flex;
+    justify-content: center;
+    
+}
+.listDevisionPage__header > h1 { margin: 0; padding: 0; }
+.listDevisionPage__bottomNavbar {
+    position: relative;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+}
+.listDevisionPage__bottomNavbar__addedButton { position: absolute; right: 0; }
+
+.listDevisionPage__tableHead th {
+    background: #3f51b5;
+    color: white;
+    font-size: 16px;
+}
+
+.listDevisionPage__selectWrapper {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.listDevisionPage__selectWrapper > span { margin-right: 20px; }
+
+.listDevisionPage__selectWrapper {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.listDevisionPage__selectWrapper__select { height: 30px; }
+.test td:last-child { width: 0px; }
+.test td:nth-child(3){ width: 200px;}
+.test td:nth-child(1){ width: 180px; }
+
+
+

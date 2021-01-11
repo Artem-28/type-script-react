@@ -1,0 +1,12 @@
+.ItemDevision__input { height: 20px; bottom: 5px; }
+.ItemDevision__input input { font-size: 14px; }
+.ItemDevision__input p { font-size: 11px; margin-top: 0; }
+.ItemDevision__buttonWrapper{ position: relative; }
+.ItemDevision__buttonWrapper__button {
+    position: absolute;
+    display: flex;
+    left: -30px;
+    top: -23px;
+
+}
+

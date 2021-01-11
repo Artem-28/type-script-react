@@ -1,0 +1,13 @@
+.WarningDelete__alert {
+    width: 50%;
+    margin-top: 160px;
+    height: 100vh;
+}
+
+.WarningDelete__alert div:first-child { background-color: white; }
+
+.WarningDelete__alert__button {
+    display: flex;
+    justify-content: space-between;
+    width: 135px;
+}
