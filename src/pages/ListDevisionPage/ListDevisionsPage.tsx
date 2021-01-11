@@ -11,7 +11,7 @@ import Paper from '@material-ui/core/Paper';
 import { Button } from '@material-ui/core';
 import './ListDevisionsPage.css'
 import AddDevision from '../../conponents/AddDevision/AddDevision';
-import {deleteDevision, fetchDevisionsMetadate, fetchListDevisions, updateDivision } from '../../store/actions/actionListDevisions';
+import {deleteDevision, fetchListDevisions, updateDivision } from '../../store/actions/actionListDevisions';
 import { AppState } from '../../store/redusers/rootReduser';
 import TableLoading from '../../conponents/TableLoading/TableLoading';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -21,6 +21,7 @@ import { MyDevision } from '../../entities/MyDevision';
 import ItemDevision from '../../conponents/ItemDevision/ItemDevision';
 import WarningDelete from '../../conponents/WarningDelete/WarningDelete';
 import { IDevision } from '../../interfaces/devision';
+import { fetchMetadate } from '../../store/actions/actionMetadata';
 
 export interface IRange {
     startKey: string | null
@@ -84,7 +85,7 @@ const ListDevisionsPage: React.FC = () => {
     }
 
     useEffect(() => {
-        fetchDevisionsMetadate()
+        fetchMetadate('devisions')
         fetchListDevisions(range)
     }, [range])
 

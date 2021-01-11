@@ -13,7 +13,6 @@ const initialSate: IState = {
         keys: [],
     }
 }
-/* const initialSate: MyDevision[] = [] */
 
 export default function ListDevisionsReduser(state = initialSate, action: ListDevisionsActionTypes): IState{
     switch(action.type){

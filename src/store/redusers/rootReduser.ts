@@ -4,11 +4,13 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import { AppActions } from '../actions/actionTypes'
 import loadingReduser from './loadingReduser'
 import ListDevisionsReduser from './listDevisionsReduser'
+import ListManagersReduser from './listManagersReduser'
 
 
 export const rootReducer = combineReducers({
     loading: loadingReduser,
-    listDevisions: ListDevisionsReduser
+    listDevisions: ListDevisionsReduser,
+    listManagers: ListManagersReduser
 })
 
 export const store = createStore(rootReducer, composeWithDevTools(

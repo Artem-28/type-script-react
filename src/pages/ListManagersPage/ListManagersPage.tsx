@@ -1,13 +1,18 @@
-import React from 'react';
+import React, {useEffect} from 'react';
+import { fetchListManagers } from '../../store/actions/actionListManagers';
+import { fetchMetadate } from '../../store/actions/actionMetadata';
 
 
 
-class ListManagersPage extends React.Component<{}, {}> {
-    render(){
-        return(
-            <h1>List MAnagers</h1>
-        )
-    }
+const ListManagersPage: React.FC = () => {
+    useEffect(() => {
+       fetchMetadate('managers')
+       fetchListManagers()
+    }, [])
+    return (
+        <h1>List MAnagers</h1>
+    )
+    
 }
 
 
