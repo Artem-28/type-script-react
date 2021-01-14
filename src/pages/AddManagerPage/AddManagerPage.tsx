@@ -18,7 +18,7 @@ import SelectDevisions from '../../conponents/SelectDevisions/SelectDevisions';
 import { MyManager } from '../../entities/MyManager';
 import { addedManager } from '../../store/actions/actionListManagers';
 
-interface IControlsManager {
+export interface IControlsManager {
     name: MyControlText
     lastName: MyControlText
     devision: MyControlSelectDevision
@@ -107,6 +107,7 @@ const AddManagerPage: React.FC = () => {
                 <SelectDevisions 
                     changeSelectDevision = {changeSelectDevision}
                     control = {controls.devision}
+                    variant = 'outlined'
                 />
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <DateTimePicker

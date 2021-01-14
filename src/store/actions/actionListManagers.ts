@@ -6,6 +6,8 @@ import { toggleLoading } from "./actionLoading";
 import { MyManager } from "../../entities/MyManager";
 import { MyDevision } from "../../entities/MyDevision";
 import { GET_LIST_MANAGERS, IGetListManagers } from "./actionTypes";
+import { IRange } from "../../pages/ListDevisionPage/ListDevisionsPage";
+import { fetchMetadate } from "./actionMetadata";
 
 export function addedManager(manager: IManager): void{
     store.dispatch(toggleLoading(true))
@@ -32,10 +34,22 @@ function updateManagersMetadate(key: string | null){
     
 }
 
-export function fetchListManagers () {
+export function deleteManager(key: string | null, range: IRange): void {
+    store.dispatch(toggleLoading(true))
+    firebase.database().ref(`managers/${key}`).set(null)
+    firebase.database().ref(`managers-metadata/keys/${key}`).set(null)
+    fetchListManagers(range)
+    fetchMetadate('managers')
+    store.dispatch(toggleLoading(false))
+}
+
+export function fetchListManagers (range: IRange ) {
     store.dispatch(toggleLoading(true))
     const listManagers: MyManager [] = []
     firebase.database().ref('managers')
+    .orderByChild('managers')
+    .startAt(null, range.startKey || undefined)
+    .limitToFirst(range.limit)
     .once('value', managers => {
         managers.forEach(manager => {
             const getDevision = new MyDevision(

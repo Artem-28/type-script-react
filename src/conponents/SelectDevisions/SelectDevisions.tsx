@@ -11,15 +11,17 @@ import { MyDevision } from '../../entities/MyDevision';
 interface ISelectDevisionProps {
   changeSelectDevision: (isValid: MyControlSelectDevision) => void
   control: MyControlSelectDevision
+  variant?: 'standard' | 'filled' | 'outlined' | undefined
 }
 
 export interface IOptionsSelectType {
-  devision: IDevision
+  devision: IDevision 
 }
 
-const SelectDevisions: React.FC<ISelectDevisionProps> = ({ changeSelectDevision, control }) => {
+const SelectDevisions: React.FC<ISelectDevisionProps> = ({ changeSelectDevision, control, variant }) => {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState<IOptionsSelectType[]>([])
+  const [currentValue, setCurrentValue] = useState<IOptionsSelectType | null>(null)
   const [value, setValue] = useState<string>('');
   const loading = open && options.length === 0 && value.trim().length !== 0;
   let timer: NodeJS.Timeout | undefined = undefined
@@ -31,6 +33,8 @@ const SelectDevisions: React.FC<ISelectDevisionProps> = ({ changeSelectDevision,
 
   function changeHandler(event: React.ChangeEvent<{}>, newValue: IOptionsSelectType | null) {
     control.touched = true
+    setCurrentValue(newValue)
+    console.log(newValue)
     if (newValue) {
       control.value = newValue.devision
       control.valid = true
@@ -57,12 +61,22 @@ const SelectDevisions: React.FC<ISelectDevisionProps> = ({ changeSelectDevision,
     })()
     return () => { active = false }
   }, [loading, value])
-
+  
   useEffect(() => { if (!open) { setOptions([]) } }, [open])
+  useEffect(() => {
+    
+    if(control.value) { 
+      setCurrentValue({devision: control.value})
+    } else {
+      setCurrentValue(null)
+    }
+
+  }, [control.value])
 
   return (
     <Autocomplete
       style={{ width: '100%' }}
+      autoComplete = {true}
       open={open}
       onOpen={() => setOpen(true)}
       onClose={() => setOpen(false)}
@@ -70,6 +84,7 @@ const SelectDevisions: React.FC<ISelectDevisionProps> = ({ changeSelectDevision,
       getOptionLabel={(option) => option.devision.name}
       loadingText={'Загрузка...'}
       noOptionsText={'Нет таких подразделений'}
+      value = {currentValue}
       options={options}
       loading={loading}
       onChange={(event, newValue) => changeHandler(event, newValue)}
@@ -77,7 +92,7 @@ const SelectDevisions: React.FC<ISelectDevisionProps> = ({ changeSelectDevision,
         <TextField
           {...params}
           label={control.label}
-          variant="outlined"
+          variant={variant}
           onChange={e => changeSearch(e.target.value)}
           error={!control.valid && control.touched}
           helperText={!control.valid && control.touched ? control.errorMessage : null}

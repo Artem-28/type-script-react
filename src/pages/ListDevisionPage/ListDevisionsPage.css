@@ -28,15 +28,11 @@
     position: relative;
     align-items: center;
     margin-bottom: 10px;
+    width: 100%;
 }
 .listDevisionPage__selectWrapper > span { margin-right: 20px; }
 
-.listDevisionPage__selectWrapper {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-}
+
 
 .listDevisionPage__selectWrapper__select { height: 30px; }
 .test td:last-child { width: 0px; }

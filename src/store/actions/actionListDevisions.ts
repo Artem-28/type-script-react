@@ -36,7 +36,8 @@ export function fetchListDevisions(range: IRange ): void {
     store.dispatch(toggleLoading(true))
     const listDevisions: MyDevision[] = []
    
-    firebase.database().ref('devisions').orderByChild('devisions')
+    firebase.database().ref('devisions')
+    .orderByChild('devisions')
     .startAt(null, range.startKey || undefined)
     .limitToFirst(range.limit)
     .once('value', devisions => {
