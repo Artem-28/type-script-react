@@ -6,7 +6,7 @@ import { toggleLoading } from './actionLoading';
 import { store } from "../redusers/rootReduser";
 import { MyDevision } from "../../entities/MyDevision";
 import { IRange } from "../../pages/ListDevisionPage/ListDevisionsPage";
-import { updateMetadate, fetchMetadate } from "./actionMetadata";
+import { updateMetadate, fetchMetadate, getCurrentKeys } from "./actionMetadata";
 
 export function getListDevisions(list: MyDevision[]): IGetListDevisions{
     return {
@@ -25,16 +25,12 @@ export function deleteDevision(key: string | null, range: IRange): void {
     store.dispatch(toggleLoading(false))
 }
 
-export function updateDivision(devision: IDevision, key: string | null, range: IRange): void {
-    store.dispatch(toggleLoading(true))
-    firebase.database().ref(`devisions/${key}`).update({name: devision.name, date: devision.date})
-    fetchListDevisions(range)
-    store.dispatch(toggleLoading(false))
-}
+
 
 export function fetchListDevisions(range: IRange ): void {
     store.dispatch(toggleLoading(true))
     const listDevisions: MyDevision[] = []
+    const currentKeys: (string | null)[] = []
    
     firebase.database().ref('devisions')
     .orderByChild('devisions')
@@ -42,11 +38,13 @@ export function fetchListDevisions(range: IRange ): void {
     .limitToFirst(range.limit)
     .once('value', devisions => {
         devisions.forEach(devision => {
+            currentKeys.push(devision.key)
             const getDevision = new MyDevision(devision.val().name, new Date(devision.val().date))
             getDevision.setId = devision.val().id
             listDevisions.push(getDevision)
         })
     }).then(()=> {
+        store.dispatch(getCurrentKeys(currentKeys))
         store.dispatch(getListDevisions(listDevisions))
         store.dispatch(toggleLoading(false))
     })

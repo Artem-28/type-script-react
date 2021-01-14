@@ -1,0 +1,8 @@
+.ItemDevisions__TableRow .ItemDevision__button {
+    position: absolute;
+    top: 0;
+    right: 20px;
+}
+.ItemDevisions__TableRow .ItemDevision__button__hidden { display: none; }
+.ItemDevisions__TableRow td:last-child { position: relative;}
+

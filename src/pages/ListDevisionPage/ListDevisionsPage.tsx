@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import {useSelector} from 'react-redux'
 import Container from '@material-ui/core/Container';
 import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
@@ -11,17 +10,15 @@ import Paper from '@material-ui/core/Paper';
 import { Button } from '@material-ui/core';
 import './ListDevisionsPage.css'
 import AddDevision from '../../conponents/AddDevision/AddDevision';
-import {deleteDevision, fetchListDevisions, updateDivision } from '../../store/actions/actionListDevisions';
+import {deleteDevision, fetchListDevisions } from '../../store/actions/actionListDevisions';
 import { AppState } from '../../store/redusers/rootReduser';
 import TableLoading from '../../conponents/TableLoading/TableLoading';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Pagination from '@material-ui/lab/Pagination';
-import { MyDevision } from '../../entities/MyDevision';
-import ItemDevision from '../../conponents/ItemDevision/ItemDevision';
 import WarningDelete from '../../conponents/WarningDelete/WarningDelete';
-import { IDevision } from '../../interfaces/devision';
 import { fetchMetadate } from '../../store/actions/actionMetadata';
+import ItemDevisions from '../../conponents/ItemDevisions/ItemDevisions';
 
 export interface IRange {
     startKey: string | null
@@ -30,14 +27,13 @@ export interface IRange {
 }
 
 interface IEditItemState {
-    nameItem: string | null
-    idItem: number | false
-    keyItem: string | null
+    title: string | null
+    key: string | null
 }
 
 const ListDevisionsPage: React.FC = () => {
     const [isAddDevision, setIsAddDevision] = useState<boolean>(false)
-    const [editDevision, setEditDevision] = useState<IEditItemState>({nameItem: null, idItem: false, keyItem: null})
+    const [editDevision, setEditDevision] = useState<IEditItemState>({title: null, key: null})
     const [range, setRange] = useState<IRange>({startKey: null,  limit: 5, currentPage: 1})
     const [isOpenAlert, setIsOpenAlert] = useState<boolean>(false)
     const loading = useSelector((state: AppState) => state.loading)
@@ -61,29 +57,19 @@ const ListDevisionsPage: React.FC = () => {
         }})
     }
 
-    function editHandler(devision: MyDevision, index: number) {
-        setEditDevision(prev => { return {
-                ...prev, 
-                idItem: devision.id, 
-                nameItem: devision.name, 
-                keyItem: listDevisions.metadata.keys[index]
-        }}) 
-    }
-
     function toggleAddDevision(): void { setIsAddDevision(prev => !prev) }
-    function toggleAlert(): void { setIsOpenAlert(prev => !prev) }
-
+   
     function confirmAlert(confirm: boolean, ): void {
-        toggleAlert()
-        if(confirm){ deleteDevision(editDevision.keyItem, range) }
-        setEditDevision({nameItem: null, idItem: false, keyItem: null})
+        setIsOpenAlert(false)
+        if(confirm){ deleteDevision(editDevision.key, range) }
+        setEditDevision({title: null, key: null})
     }
 
-    function saveDevision(devision: IDevision): void {
-        updateDivision(devision, editDevision.keyItem, range)
-        setEditDevision({nameItem: null, idItem: false, keyItem: null})
+    function changeItem(key: string | null, title: string) {
+        setEditDevision({title, key})
+        setIsOpenAlert(true)
     }
-
+   
     useEffect(() => {
         fetchMetadate('devisions')
         fetchListDevisions(range)
@@ -110,36 +96,20 @@ const ListDevisionsPage: React.FC = () => {
                 </div>
                 <TableContainer component={Paper} >
                     <Table aria-label="simple table">
-                        <TableHead className='listDevisionPage__tableHead' >
-                            <TableRow >
+                        <TableHead className='listDevisionPage__tableHead'>
+                            <TableRow className='listDevisionPage__tableRow'>
                                 <TableCell align="center">id</TableCell>
                                 <TableCell align="center">Название подразделения</TableCell>
                                 <TableCell align="center">Дата создания</TableCell>
-                                <TableCell align="center" />
                             </TableRow>
                         </TableHead>
-                        {!loading 
-                        ?<TableBody className = 'listDevisionPage__tableBody'>
-                            {listDevisions.devisions.map((devision, index) => {
-                                    return (
-                                        <TableRow 
-                                            className = 'test'
-                                            id = {`${devision.id}`}
-                                            hover={true} 
-                                            key={devision.id} 
-                                            onDoubleClick = {() => editHandler(devision, index)}
-                                        >
-                                            <ItemDevision 
-                                                devision = {devision}
-                                                deleteDevision = {toggleAlert} 
-                                                saveDevision = {saveDevision}
-                                                id = {editDevision.idItem}
-                                            />
-                                        </TableRow>
-                                    ) 
-                                })}
-                        </TableBody>
-                        : null }
+                        {!loading
+                        ? <ItemDevisions 
+                            devisions = {listDevisions.devisions}
+                            deleteClick = {changeItem}
+                            keys = {listDevisions.metadata.currentKeys}
+                        />
+                        : null}
                     </Table>
                 </TableContainer>
                 <TableLoading 
@@ -164,7 +134,7 @@ const ListDevisionsPage: React.FC = () => {
             </Container>
             <WarningDelete 
                 isOpen = {isOpenAlert} 
-                nameItem = {editDevision.nameItem} 
+                nameItem = {editDevision.title} 
                 onClick = {confirmAlert}
             />
             <AddDevision 

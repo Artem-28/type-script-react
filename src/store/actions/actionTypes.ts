@@ -6,6 +6,7 @@ export const TOGGLE_LOADING = 'TOGGLE_LOADING'
 export const GET_LIST_DEVISIONS = 'GET_LIST_DEVISION'
 export const GET_DEVISIONS_METADATA = 'GET_DEVISIONS_METADATA'
 export const GET_MANAGERS_METADATA = 'GET_MANAGERS_METADATA'
+export const GET_CURRENT_KEYS = 'GET_CURRENT_KEYS'
 export const GET_LIST_MANAGERS = 'GET_LIST_MANAGERS'
 
 
@@ -20,7 +21,7 @@ export interface IGetListDevisions {
 }
 
 export interface IGetMetadata {
-    type: typeof GET_DEVISIONS_METADATA | typeof GET_MANAGERS_METADATA
+    type: typeof GET_DEVISIONS_METADATA | typeof GET_MANAGERS_METADATA | typeof GET_CURRENT_KEYS
     payload: (string | null)[]
 }
 
