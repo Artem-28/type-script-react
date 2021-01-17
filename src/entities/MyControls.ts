@@ -19,12 +19,13 @@ class MyControl implements IControl {
 
 export class MyControlText extends MyControl implements IControlText {
     value: string 
-    errorMessage: string = 'Поле не должно быть пустым'
-    constructor(validation: IValidation,  value: string, label?: string){
+    errorMessage?: string
+    constructor(validation: IValidation,  value: string, label?: string, errorMessage?: string){
         super(validation, value);
         this.validation = validation
         this.value = value 
         this.label = label
+        this.errorMessage = errorMessage || 'Поле не должно быть пустым'
     }
     clear(): void { 
         this.value = '' 

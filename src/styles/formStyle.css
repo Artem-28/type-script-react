@@ -1,0 +1,35 @@
+.formStyle__conteiner {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+.formStyle__formManager {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    flex-direction: column;
+}
+
+.formStyle__paper {
+    position: relative;
+    padding-top: 20px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.formStyle__header { margin-bottom: 30px; }
+
+.formStyle__buttonWrapper {
+    width: 80%;
+    margin-top: 50px;
+    display: flex;
+    justify-content: center;
+}
+
+.formStyle__button { width: 120px; }
+.formStyle__loader { width: 100%; position: absolute; top: 0; }
+
+.formStyle_control p {position: absolute; bottom: -25px;}

@@ -26,7 +26,7 @@ export interface IControlsManager {
 }
 
 const AddManagerPage: React.FC = () => {
-    const loading2 = useSelector((state: AppState) => state.loading)
+    const loading = useSelector((state: AppState) => state.loading)
     const [isFormValid, setIsFormValid] = useState<boolean>(false)
     const [controls, setControls] = useState<IControlsManager>({
         name: new MyControlText({required: true}, '', 'Имя'),
@@ -76,7 +76,7 @@ const AddManagerPage: React.FC = () => {
         <div className = 'addManager__conteiner'>
             <Paper elevation={7} className='addManager__paper'>
             <div className = 'addManager__loader'>
-                {loading2 ? <LinearProgress /> : null }
+                {loading ? <LinearProgress /> : null }
             </div>
             <h2 className='addManager__header'>Добавление нового менеджера</h2>
             <form className='addManager__formManager'>
@@ -126,7 +126,7 @@ const AddManagerPage: React.FC = () => {
                     className = 'addManager__button'
                     disabled={!isFormValid }
                     onClick = {createNewManager}
-                >{loading2 ? <CircularProgress size = {20}/> : 'Добавить'}</Button>
+                >{loading ? <CircularProgress size = {20}/> : 'Добавить'}</Button>
             </div>
         </Paper>
     </div>

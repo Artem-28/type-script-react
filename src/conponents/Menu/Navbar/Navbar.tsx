@@ -1,13 +1,14 @@
 import React, {useState} from 'react'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Drawer from '@material-ui/core/Drawer';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import GroupIcon from '@material-ui/icons/Group';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AssignmentIcon from '@material-ui/icons/Assignment';
+import LockIcon from '@material-ui/icons/Lock';
 import './Navbar.css'
 import MenuLinks from '../MenuLinks/MenuLinks';
 import { MyLink } from '../../../entities/MyLink'
@@ -19,7 +20,9 @@ const Navbar: React.FC = () => {
     const links:Ilink[]= [
         new MyLink('/add-manager', 'Добавить менеджера', <PersonAddIcon/>),
         new MyLink('/', 'Список менеджеров', <GroupIcon/>),
-        new MyLink('/subdivision', 'Список подразделений', <AssignmentIcon/>)
+        new MyLink('/subdivision', 'Список подразделений', <AssignmentIcon/>),
+        new MyLink('/auth', 'Авторизация пользователя', <LockIcon/> ),
+        new MyLink('/registration', 'Регистрация пользователя', <AccountCircleIcon /> ),
     ]
     
     const [activeLink, setActiveLink] = useState<string>('/')
@@ -43,11 +46,6 @@ const Navbar: React.FC = () => {
                     >
                         <MenuIcon />
                     </IconButton>
-                    <div className='title'>
-                        <Typography variant='h6'>
-                            News
-                    </Typography>
-                    </div>
                     <div className='menuItem'>
                         <MenuLinks 
                             links = {links}
