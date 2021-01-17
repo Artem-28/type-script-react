@@ -8,3 +8,12 @@ export interface IManager {
     devision: IDevision
     date: Date
 }
+
+export interface ISendManager {
+    id: number
+    uuid: string
+    lastName: string
+    name: string
+    devisionKey: string
+    date: Date
+}

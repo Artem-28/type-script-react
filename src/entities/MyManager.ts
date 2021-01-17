@@ -1,8 +1,23 @@
 import { genID } from "../generationID/genID";
-import { IManager } from "../interfaces/manager";
+import { IManager, ISendManager } from "../interfaces/manager";
 
 import { v4 as uuidv4 } from 'uuid';
 import { IDevision } from "../interfaces/devision";
+
+export class SendManager implements ISendManager {
+    id: number = genID()
+    uuid: string = uuidv4()
+    lastName: string
+    name: string
+    devisionKey: string
+    date: Date
+    constructor(lastName: string, name: string, devisionKey: string,  date: Date){
+        this.lastName = lastName
+        this.name = name
+        this.devisionKey = devisionKey
+        this.date = date
+    }
+}
 
 export class MyManager implements IManager {
     id: number = genID()

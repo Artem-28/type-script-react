@@ -26,18 +26,15 @@ const RegistrationPage: React.FC = () => {
         email: new MyControlText(
             {required: true, email: true}, 
             '', 
-            'Введите email',
-            'Введен некорректный email'),
+            'Введите email'),
         password: new MyControlText(
             {required: true, minLength: 6}, 
             '', 
-            'Введите пароль', 
-            'Пароль должен содержать 6 символов'),
+            'Введите пароль'),
         repeatPassword: new MyControlText(
-            {required: true}, 
+            {required: true, repeat: true}, 
             '', 
-            'Повторите пароль', 
-            'Пароли не совпадают'),
+            'Повторите пароль'),
     })
 
    
@@ -46,7 +43,7 @@ const RegistrationPage: React.FC = () => {
         const control = newControls[controlName]
         control.value = value
         control.touched = true
-        control.valid = validateControl(control)
+        validateControl(control, controls.password)
         const formValid = formValidateControl(controls) 
         && (controls.password.value === controls.repeatPassword.value)
         setControls({...newControls})
@@ -67,8 +64,9 @@ const RegistrationPage: React.FC = () => {
             {loading ? <LinearProgress /> : null }
         </div>
         <h2 className='formStyle__header'>Регистрация нового пользователя</h2>
-        <form className='formStyle__formManager RegistrationPage__formManager'>
+        <form className='formStyle__form RegistrationPage__formManager'>
             <TextField
+                className = 'formStyle_control'
                 label={controls.email.label}
                 value={controls.email.value}
                 onChange={e => changeHandler(e.target.value, 'email')}

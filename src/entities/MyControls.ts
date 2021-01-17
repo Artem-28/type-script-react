@@ -1,6 +1,6 @@
 import { genID } from "../generationID/genID"
 import { IDevision } from "../interfaces/devision"
-import {IControl, IControlDate, IControlSelectDevision, IControlText, valueControlType} from "../interfaces/formControl"
+import {IControl, IControlDate, IControlText, valueControlType} from "../interfaces/formControl"
 import { IValidation } from "../interfaces/validationControl"
 
 class MyControl implements IControl {
@@ -25,7 +25,7 @@ export class MyControlText extends MyControl implements IControlText {
         this.validation = validation
         this.value = value 
         this.label = label
-        this.errorMessage = errorMessage || 'Поле не должно быть пустым'
+        this.errorMessage = errorMessage
     }
     clear(): void { 
         this.value = '' 
@@ -37,6 +37,7 @@ export class MyControlText extends MyControl implements IControlText {
 export class MyControlDate extends MyControl implements IControlDate {
     value: Date | null 
     valid: boolean = true
+    errorMessage?: string
     constructor(validation: IValidation,  value: Date | null, label?: string){
         super(validation, value);
         this.validation = validation
@@ -49,14 +50,16 @@ export class MyControlDate extends MyControl implements IControlDate {
     }
 }
 
-export class MyControlSelectDevision implements IControlSelectDevision {
+/* export class MyControlSelectDevision implements IControlSelectDevision {
     readonly id: number = genID()
     value: IDevision | null
     valid: boolean = false
     touched: boolean = false
     errorMessage: string = 'Поле не должно быть пустым'
+    validation: IValidation
     label?: string
-    constructor (value:IDevision | null,  label?: string ){
+    constructor (validation: IValidation, value:IDevision | null,  label?: string ){
+        this.validation = validation
         this.value = value
         this.label = label
     }
@@ -65,4 +68,4 @@ export class MyControlSelectDevision implements IControlSelectDevision {
         this.valid = false
         this.touched = false
     }
-}
+} */

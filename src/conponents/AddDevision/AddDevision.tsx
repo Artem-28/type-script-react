@@ -44,7 +44,7 @@ const AddDevision: React.FC<IAddedDevisionProps> = ({isOpen, toggleAddDevision, 
         const control = newControls[controlName]
         control.value = value
         control.touched = true
-        control.valid = validateControl(control)
+        validateControl(control)
         const formValid = formValidateControl(controls)
         setControls({...newControls})
         setIsFormValid(formValid)
@@ -62,14 +62,13 @@ const AddDevision: React.FC<IAddedDevisionProps> = ({isOpen, toggleAddDevision, 
     
     return (
         <Backdrop style={{zIndex: 1}} open={isOpen} >
-            <Paper className='addDevision__peper'>
-                <div className = 'addDevision__loader'>
+            <Paper className='formStyle__paper addDevision__peper'>
+                <div className = 'formStyle__loader'>
                     {loading ? <LinearProgress /> : null }
                 </div>
-                <h2 className='addDevision__header'>Добавление нового подразделения</h2>
-                <form className='addDevision__formDevision'>
+                <h2 className='formStyle__header'>Добавление нового подразделения</h2>
+                <form className='formStyle__form addDevision__formDevision'>
                     <TextField
-                        id='outlined-basic'
                         label={controls.name.label}
                         value={controls.name.value}
                         onChange={e => changeHandler(e.target.value, 'name')}
@@ -90,18 +89,18 @@ const AddDevision: React.FC<IAddedDevisionProps> = ({isOpen, toggleAddDevision, 
                         />
                     </MuiPickersUtilsProvider>
                 </form>
-                <div className='addDevision__buttonWrapper'>
+                <div className='formStyle__buttonWrapper addDevision__buttonWrapper'>
                     <Button 
                         variant="outlined" 
                         color="secondary"
-                        className = 'addDevision__button'
+                        className = 'formStyle__button'
                         disabled = {loading}
                         onClick = {() => toggleAddDevision()}
                     >Отмена</Button>
                     <Button 
                         variant="outlined" 
                         color="primary" 
-                        className = 'addDevision__button'
+                        className = 'formStyle__button'
                         disabled={!isFormValid}
                         onClick = {createNewDevision}
                     >{loading ? <CircularProgress size = {20}/> : 'Сохранить'}</Button>

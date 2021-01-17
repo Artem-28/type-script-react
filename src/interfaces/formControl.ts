@@ -1,11 +1,11 @@
 
-import { MyControlSelectDevision, MyControlText, MyControlDate } from "../entities/MyControls";
+import { MyControlText, MyControlDate } from "../entities/MyControls";
 import { IDevision } from "./devision";
 import { IValidation } from "./validationControl";
 
 
-export type valueControlType = string | Date | null 
-export type controlType = MyControlSelectDevision | MyControlText | MyControlDate
+export type valueControlType = string | Date | null  
+export type controlType =  MyControlText | MyControlDate
 
 export interface IControl {
     id: number
@@ -25,11 +25,12 @@ export interface IControlText extends IControl  {
     value: string
 }
 
-export interface IControlSelectDevision  {
+/* export interface IControlSelectDevision  {
     id: number
     label?: string
     value: IDevision | null
     valid: boolean
     touched: boolean
+    validation: IValidation  
     errorMessage?: string
-}
+} */

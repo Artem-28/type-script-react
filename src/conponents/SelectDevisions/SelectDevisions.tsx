@@ -1,10 +1,9 @@
 import 'firebase/database'
 import React, { useState, useEffect } from 'react';
-import TextField from '@material-ui/core/TextField';
+/* import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { getOptionSelectDevisions } from '../../store/actions/actionSelectDevisions';
-import { MyControlSelectDevision } from '../../entities/MyControls';
 import { IDevision } from '../../interfaces/devision';
 import { MyDevision } from '../../entities/MyDevision';
 
@@ -15,7 +14,7 @@ interface ISelectDevisionProps {
 }
 
 export interface IOptionsSelectType {
-  devision: IDevision 
+  
 }
 
 const SelectDevisions: React.FC<ISelectDevisionProps> = ({ changeSelectDevision, control, variant }) => {
@@ -111,4 +110,4 @@ const SelectDevisions: React.FC<ISelectDevisionProps> = ({ changeSelectDevision,
   );
 }
 
-export default SelectDevisions
+export default SelectDevisions */

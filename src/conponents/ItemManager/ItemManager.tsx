@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import TableCell from '@material-ui/core/TableCell';
 import TextField from '@material-ui/core/TextField';
-import { MyControlDate, MyControlSelectDevision, MyControlText } from '../../entities/MyControls';
+import { MyControlDate, MyControlText } from '../../entities/MyControls';
 import { validateControl } from '../../validateFormControls/validateControl';
 import { formValidateControl } from '../../validateFormControls/validateForm';
 import { valueControlType } from '../../interfaces/formControl';
@@ -14,7 +14,6 @@ import { capitalizeFirstLetter } from '../../appFunctions/capitalize';
 import { MyManager } from '../../entities/MyManager';
 import {IControlsManager} from '../../pages/AddManagerPage/AddManagerPage'
 import { IManager } from '../../interfaces/manager';
-import SelectDevisions from '../SelectDevisions/SelectDevisions';
 import './ItemManager.css'
 
 interface IItemManagerProps {
@@ -29,7 +28,7 @@ const ItemManager: React.FC<IItemManagerProps> = ({ manager, id, deleteManager, 
     const [controls, setControls] = useState<IControlsManager>({
         name: new MyControlText({required: true}, manager.name),
         lastName: new MyControlText({required: true}, manager.lastName),
-        devision: new MyControlSelectDevision(manager.devision),
+        devision: new MyControlText({required: true}, '', 'Выбирите подразделение'),
         date: new MyControlDate({required: false}, manager.date)
     })
     
@@ -38,20 +37,20 @@ const ItemManager: React.FC<IItemManagerProps> = ({ manager, id, deleteManager, 
         const control = newControls[controlName]
         control.value = value
         control.touched = true
-        control.valid = validateControl(control)
+        validateControl(control)
         const formValid = formValidateControl(controls)
         setControls({ ...newControls })
         setIsFormValid(formValid)
     }
 
-    function changeSelectDevision(control: MyControlSelectDevision): void {
+    /* function changeSelectDevision(control: MyControlSelectDevision): void {
         setControls(prev => {
             return { ...prev, devision: control }
         })
         const formValid = formValidateControl(controls)
         setIsFormValid(formValid)
     }
-
+ */
     function changeManager() {
         /* const upManager = new MyManager(
             controls.lastName.value, 
@@ -91,11 +90,11 @@ const ItemManager: React.FC<IItemManagerProps> = ({ manager, id, deleteManager, 
                     />
                 </TableCell>
                 <TableCell align="center">
-                    <SelectDevisions 
+                  {/*   <SelectDevisions 
                         changeSelectDevision = {changeSelectDevision}
                         control = {controls.devision}
                        
-                    />
+                    /> */}
                 </TableCell>
                
                 <TableCell align="center">

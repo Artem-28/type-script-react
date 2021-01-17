@@ -3,24 +3,20 @@ import firebase from 'firebase/app'
 import 'firebase/database'
 import { store } from "../redusers/rootReduser";
 import { toggleLoading } from "./actionLoading";
-import { MyManager } from "../../entities/MyManager";
+import { MyManager, SendManager } from "../../entities/MyManager";
 import { MyDevision } from "../../entities/MyDevision";
 import { GET_LIST_MANAGERS, IGetListManagers } from "./actionTypes";
 import { IRange } from "../../pages/ListDevisionPage/ListDevisionsPage";
 import { fetchMetadate } from "./actionMetadata";
 
-export function addedManager(manager: IManager): void{
+export function addedManager(manager: SendManager): void{
     store.dispatch(toggleLoading(true))
     const key = firebase.database().ref('managers').push({
         id: manager.id,
         uuid: manager.uuid,
         lastName: manager.lastName.toLowerCase(),
         name: manager.name.toLowerCase(),
-        devision: {
-            id: manager.devision.id,
-            name: manager.devision.name,
-            date: String(manager.devision.date)
-        },
+        devisionKey: manager.devisionKey,
         date: String(manager.date)
     }).key
     updateManagersMetadate(key)

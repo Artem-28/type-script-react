@@ -1,29 +1,4 @@
-.addDevision__formDevision {
-    display: flex;
-    justify-content: space-between;
-    height: 150px;
-    width: 80%;
-    flex-direction: column;
-}
+.addDevision__formDevision { height: 150px; }
+.addDevision__peper { height: 350px; }
+.addDevision__buttonWrapper { justify-content: space-between; }
 
-.addDevision__peper {
-    position: relative;
-    padding-top: 20px;
-    width: 500px;
-    height: 350px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.addDevision__header { margin-bottom: 30px; }
-
-.addDevision__buttonWrapper {
-    width: 80%;
-    margin-top: 50px;
-    display: flex;
-    justify-content: space-between;
-}
-
-.addDevision__button { width: 120px; }
-.addDevision__loader { width: 100%; position: absolute; top: 0; }

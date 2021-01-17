@@ -40,7 +40,7 @@ const AuthPage: React.FC = () => {
         const control = newControls[controlName]
         control.value = value
         control.touched = true
-        control.valid = validateControl(control)
+        validateControl(control)
         const formValid = formValidateControl(controls)
         setControls({...newControls})
         setIsFormValid(formValid)
@@ -60,7 +60,7 @@ const AuthPage: React.FC = () => {
             {loading ? <LinearProgress /> : null }
         </div>
         <h2 className='formStyle__header'>Войти в личный кабинет</h2>
-        <form className='formStyle__formManager AuthPage__formManager'>
+        <form className='formStyle__form AuthPage__formManager'>
             <TextField
                 label={controls.email.label}
                 value={controls.email.value}
