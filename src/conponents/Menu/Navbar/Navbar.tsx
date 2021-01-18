@@ -1,4 +1,5 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
+import {useSelector} from 'react-redux'
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -14,17 +15,27 @@ import MenuLinks from '../MenuLinks/MenuLinks';
 import { MyLink } from '../../../entities/MyLink'
 import {Ilink} from '../../../interfaces/link'
 import { useHistory } from 'react-router-dom';
+import { AppState } from '../../../store/redusers/rootReduser';
+import { autoLogin } from '../../../store/actions/actionAuthUser';
 
 const Navbar: React.FC = () => {
     const history = useHistory()
-    const links:Ilink[]= [
-        new MyLink('/add-manager', 'Добавить менеджера', <PersonAddIcon/>),
-        new MyLink('/', 'Список менеджеров', <GroupIcon/>),
-        new MyLink('/subdivision', 'Список подразделений', <AssignmentIcon/>),
-        new MyLink('/auth', 'Авторизация пользователя', <LockIcon/> ),
-        new MyLink('/registration', 'Регистрация пользователя', <AccountCircleIcon /> ),
-    ]
-    
+    const isLogin = useSelector((state: AppState) => state.currentUserApp.user)
+    let links:Ilink[]= []
+    if (isLogin !== null){
+        links = [
+            new MyLink('/add-manager', 'Добавить менеджера', <PersonAddIcon/>),
+            new MyLink('/', 'Список менеджеров', <GroupIcon/>),
+            new MyLink('/subdivision', 'Список подразделений', <AssignmentIcon/>),
+        ]
+    } else {
+        links = [
+            new MyLink('/', 'Список менеджеров', <GroupIcon/>),
+            new MyLink('/subdivision', 'Список подразделений', <AssignmentIcon/>),
+            new MyLink('/auth', 'Авторизация пользователя', <LockIcon/> ),
+            new MyLink('/registration', 'Регистрация пользователя', <AccountCircleIcon /> ),
+        ]
+    }
     const [activeLink, setActiveLink] = useState<string>('/')
     const [isOpenDrawer, setIsOpenDrawer] = React.useState<boolean>(false);
 
@@ -33,6 +44,10 @@ const Navbar: React.FC = () => {
         history.push(active)
         setIsOpenDrawer(false)
     };
+
+    useEffect(() => {
+        autoLogin()
+    }, [])
     
     return (
         <div className='conteiner'>

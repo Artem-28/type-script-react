@@ -8,7 +8,6 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import { Button } from '@material-ui/core';
-import './ListDevisionsPage.css'
 import AddDevision from '../../conponents/AddDevision/AddDevision';
 import {deleteDevision, fetchListDevisions } from '../../store/actions/actionListDevisions';
 import { AppState } from '../../store/redusers/rootReduser';
@@ -77,27 +76,27 @@ const ListDevisionsPage: React.FC = () => {
 
     return (
         <>
-            <Container className='listDevisionPage__container'>
-                <div className = 'listDevisionPage__header'>
+            <Container className='listStyle__container'>
+                <div className = 'listStyle__header'>
                     <h1>Список подразделений</h1>
                 </div>
-                <div className = 'listDevisionPage__selectWrapper'>
+                <div className = 'selectStyle__selectWrapper'>
                     <span>Показывать по:</span>
                     <Select
-                        className = 'listDevisionPage__selectWrapper__select'
+                        className = 'selectStyle__selectWrapper__select'
                         value={range.limit}
                         onChange={handleChange}
                         variant = 'outlined'  
                     >
-                        <MenuItem value={5}  className = 'listDevisionPage__selectWrapper__select'>5</MenuItem>
-                        <MenuItem value={10} className = 'listDevisionPage__selectWrapper__select'>10</MenuItem>
-                        <MenuItem value={15} className = 'listDevisionPage__selectWrapper__select'>15</MenuItem>
+                        <MenuItem value={5}  className = 'selectStyle__selectWrapper__select'>5</MenuItem>
+                        <MenuItem value={10} className = 'selectStyle__selectWrapper__select'>10</MenuItem>
+                        <MenuItem value={15} className = 'selectStyle__selectWrapper__select'>15</MenuItem>
                     </Select>
                 </div>
                 <TableContainer component={Paper} >
                     <Table aria-label="simple table">
-                        <TableHead className='listDevisionPage__tableHead'>
-                            <TableRow className='listDevisionPage__tableRow'>
+                        <TableHead className='listStyle__tableHead'>
+                            <TableRow className='listStyle__tableRow'>
                                 <TableCell align="center">id</TableCell>
                                 <TableCell align="center">Название подразделения</TableCell>
                                 <TableCell align="center">Дата создания</TableCell>
@@ -116,21 +115,21 @@ const ListDevisionsPage: React.FC = () => {
                     listLength = {listDevisions.devisions.length} 
                     label = 'Не добавлено ни одного подразделения' 
                 />
-                <div className='listDevisionPage__bottomNavbar'>
+                <div className='listStyle__bottomNavbar'>
                     <Pagination 
                         count={numPages} 
                         color="primary" 
                         onChange = {switchPages}
                         page = {range.currentPage}
                     />
-                    <div className = 'listDevisionPage__bottomNavbar__addedButton'>
+                    <div className = 'listStyle__bottomNavbar__addedButton'>
                         <Button 
                             color='primary' 
                             variant="outlined"
                             onClick = {toggleAddDevision}
                         >Добавить подразделение</Button>
                     </div>
-                </div>
+                </div> 
             </Container>
             <WarningDelete 
                 isOpen = {isOpenAlert} 

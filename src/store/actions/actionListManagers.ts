@@ -1,4 +1,3 @@
-import { IManager } from "../../interfaces/manager";
 import firebase from 'firebase/app'
 import 'firebase/database'
 import { store } from "../redusers/rootReduser";
@@ -7,7 +6,8 @@ import { MyManager, SendManager } from "../../entities/MyManager";
 import { MyDevision } from "../../entities/MyDevision";
 import { GET_LIST_MANAGERS, IGetListManagers } from "./actionTypes";
 import { IRange } from "../../pages/ListDevisionPage/ListDevisionsPage";
-import { fetchMetadate } from "./actionMetadata";
+import { fetchMetadate, getManagerCurrentKeys } from "./actionMetadata";
+
 
 export function addedManager(manager: SendManager): void{
     store.dispatch(toggleLoading(true))
@@ -39,33 +39,52 @@ export function deleteManager(key: string | null, range: IRange): void {
     store.dispatch(toggleLoading(false))
 }
 
+
+function formatManagersList(list: SendManager []){
+    const listManagers: MyManager [] = []
+    list.map( manager => {
+        let devision: MyDevision
+         firebase.database().ref(`devisions/${manager.devisionKey}`).once('value', snapShot => { 
+            if(snapShot.val() !== null){
+                devision = new MyDevision(snapShot.val().name, new Date(snapShot.val().date))
+                devision.setId = snapShot.val().id
+            } else {
+                devision = new MyDevision('подразделения не существует', new Date())
+            }
+            
+        }).then(()=> {
+            listManagers.push(new MyManager(manager.lastName, manager.name, devision, manager.date))
+            store.dispatch(getListManagers(listManagers))
+            store.dispatch(toggleLoading(false))
+        })
+        return null
+    })
+}
+
 export function fetchListManagers (range: IRange ) {
     store.dispatch(toggleLoading(true))
-    const listManagers: MyManager [] = []
+    const currentKeys: (string | null)[] = []
+    const resultGetManager: SendManager [] = []
     firebase.database().ref('managers')
     .orderByChild('managers')
     .startAt(null, range.startKey || undefined)
     .limitToFirst(range.limit)
-    .once('value', managers => {
-        managers.forEach(manager => {
-            const getDevision = new MyDevision(
-                manager.val().devision.name,
-                new Date (manager.val().devision.date)
+    .once('value',  managers => {
+       managers.forEach(value => {
+            currentKeys.push(value.key)
+            const manager = new SendManager(
+                value.val().lastName,
+                value.val().name,
+                value.val().devisionKey,
+                new Date (value.val().date)
             )
-            getDevision.setId = manager.val().devision.id
-            const getManager = new MyManager(
-                manager.val().lastName,
-                manager.val().name,
-                getDevision,
-                new Date(manager.val().date) 
-            )
-            getManager.setId = manager.val().id
-            getManager.setUuid = manager.val().uuid  
-            listManagers.push(getManager)
-        })
+            manager.id = value.val().id
+            manager.uuid = value.val().uuid
+            resultGetManager.push(manager)
+       })
     }).then(() => {
-       store.dispatch(getListManagers(listManagers))
-       store.dispatch(toggleLoading(false))
+        store.dispatch(getManagerCurrentKeys(currentKeys)) 
+        formatManagersList(resultGetManager)
     })
 }
 

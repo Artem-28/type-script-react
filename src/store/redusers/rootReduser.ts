@@ -5,12 +5,14 @@ import { AppActions } from '../actions/actionTypes'
 import loadingReduser from './loadingReduser'
 import ListDevisionsReduser from './listDevisionsReduser'
 import ListManagersReduser from './listManagersReduser'
+import CurrentUserAppReduser from './currentUserAppReduser'
 
 
 export const rootReducer = combineReducers({
     loading: loadingReduser,
     listDevisions: ListDevisionsReduser,
-    listManagers: ListManagersReduser
+    listManagers: ListManagersReduser,
+    currentUserApp: CurrentUserAppReduser
 })
 
 export const store = createStore(rootReducer, composeWithDevTools(

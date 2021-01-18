@@ -6,7 +6,7 @@ import { toggleLoading } from './actionLoading';
 import { store } from "../redusers/rootReduser";
 import { MyDevision } from "../../entities/MyDevision";
 import { IRange } from "../../pages/ListDevisionPage/ListDevisionsPage";
-import { updateMetadate, fetchMetadate, getCurrentKeys } from "./actionMetadata";
+import { updateMetadate, fetchMetadate, getDevisionCurrentKeys } from "./actionMetadata";
 
 export function getListDevisions(list: MyDevision[]): IGetListDevisions{
     return {
@@ -44,7 +44,7 @@ export function fetchListDevisions(range: IRange ): void {
             listDevisions.push(getDevision)
         })
     }).then(()=> {
-        store.dispatch(getCurrentKeys(currentKeys))
+        store.dispatch(getDevisionCurrentKeys(currentKeys)) 
         store.dispatch(getListDevisions(listDevisions))
         store.dispatch(toggleLoading(false))
     })

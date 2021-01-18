@@ -1,5 +1,5 @@
 import { MyDevision } from "../../entities/MyDevision"
-import { GET_CURRENT_KEYS, GET_DEVISIONS_METADATA, GET_LIST_DEVISIONS, ListDevisionsActionTypes } from "../actions/actionTypes"
+import { GET_DEVISION_CURRENT_KEYS, GET_DEVISIONS_METADATA, GET_LIST_DEVISIONS, ListDevisionsActionTypes } from "../actions/actionTypes"
 
 interface IState {
     devisions: MyDevision []
@@ -26,7 +26,7 @@ export default function ListDevisionsReduser(state = initialSate, action: ListDe
             return {
                 ...state, metadata: {keys: action.payload, currentKeys: state.metadata.currentKeys}
             }
-        case GET_CURRENT_KEYS:
+        case GET_DEVISION_CURRENT_KEYS:
             return {
                 ...state, metadata: {keys: state.metadata.keys, currentKeys: action.payload}
             }

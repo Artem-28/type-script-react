@@ -2,7 +2,7 @@ import firebase from 'firebase/app'
 import 'firebase/database'
 import { store } from '../redusers/rootReduser'
 import { toggleLoading } from './actionLoading'
-import { GET_CURRENT_KEYS, GET_DEVISIONS_METADATA, GET_MANAGERS_METADATA, IGetMetadata, MetadataTypes } from './actionTypes'
+import { GET_DEVISIONS_METADATA, GET_DEVISION_CURRENT_KEYS, GET_MANAGERS_METADATA, GET_MANAGER_CURRENT_KEYS, IGetMetadata, MetadataTypes } from './actionTypes'
 
 function getDevisionsMetadata(keysList: (string | null)[]): IGetMetadata{
     return {
@@ -18,9 +18,16 @@ function getManagersMetadate(keysList: (string | null)[]): IGetMetadata{
     }
 }
 
-export function getCurrentKeys(keysList: (string | null)[]): IGetMetadata {
+export function getDevisionCurrentKeys(keysList: (string | null)[]): IGetMetadata {
     return {
-        type: GET_CURRENT_KEYS,
+        type: GET_DEVISION_CURRENT_KEYS,
+        payload: keysList
+    }   
+}
+
+export function getManagerCurrentKeys(keysList: (string | null)[]): IGetMetadata {
+    return {
+        type: GET_MANAGER_CURRENT_KEYS,
         payload: keysList
     }   
 }

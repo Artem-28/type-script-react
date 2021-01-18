@@ -10,6 +10,9 @@ import { AppState } from '../../store/redusers/rootReduser';
 import { validateControl } from '../../validateFormControls/validateControl';
 import { formValidateControl } from '../../validateFormControls/validateForm';
 import './AuthPage.css'
+import { loginUser } from '../../store/actions/actionAuthUser';
+import { useHistory } from 'react-router-dom';
+
 
 
 export interface IControlAuth {
@@ -18,6 +21,7 @@ export interface IControlAuth {
 }
 
 const AuthPage: React.FC = () => {
+    const history = useHistory()
     const loading = useSelector((state: AppState) => state.loading)
     const [isFormValid, setIsFormValid] = useState<boolean>(false)
     const [controls, setControls] = useState<IControlAuth>({
@@ -47,7 +51,8 @@ const AuthPage: React.FC = () => {
     }
 
     function loginHandler() {
-        
+        loginUser(controls.email.value, controls.password.value)
+        history.push('/')
     }
 
 

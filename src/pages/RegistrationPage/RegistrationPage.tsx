@@ -10,6 +10,7 @@ import { AppState } from '../../store/redusers/rootReduser';
 import { validateControl } from '../../validateFormControls/validateControl';
 import { formValidateControl } from '../../validateFormControls/validateForm';
 import './RegistrationPage.css'
+import { registrationUser } from '../../store/actions/actionAuthUser';
 
 
 
@@ -51,7 +52,13 @@ const RegistrationPage: React.FC = () => {
     }
 
     function registrationHandler() {
-        
+        registrationUser(controls.email.value, controls.password.value)
+        const clearControls = controls
+        clearControls.email.clear()
+        clearControls.password.clear()
+        clearControls.repeatPassword.clear()
+        setIsFormValid(false) 
+        setControls({...clearControls}) 
     }
 
 

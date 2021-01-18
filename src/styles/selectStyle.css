@@ -1,0 +1,11 @@
+.selectStyle__selectWrapper {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    align-items: center;
+    margin-bottom: 10px;
+    width: 100%;
+}
+
+.selectStyle__selectWrapper > span { margin-right: 20px; }
+.selectStyle__selectWrapper__select { height: 30px; }

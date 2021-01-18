@@ -1,4 +1,5 @@
 import React from 'react'
+import {useSelector} from 'react-redux'
 import TableBody from '@material-ui/core/TableBody';
 import TableRow from '@material-ui/core/TableRow';
 import TableCell from '@material-ui/core/TableCell';
@@ -7,8 +8,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import { capitalizeFirstLetter } from '../../appFunctions/capitalize';
 import { MyDevision } from '../../entities/MyDevision';
 import './ItemDevisions.css'
+import { AppState } from '../../store/redusers/rootReduser';
 
-
+ 
 
 interface IItemDevisionsProp {
     devisions: MyDevision[]
@@ -17,7 +19,8 @@ interface IItemDevisionsProp {
 }
 
 const ItemDevisions: React.FC<IItemDevisionsProp> = ({devisions, keys, deleteClick}) => {
-    let isLogin = true
+    const isLogin = useSelector((state: AppState) => state.currentUserApp.user)
+    
     const clsButton = ['ItemDevision__button']
     if (!isLogin) { clsButton.push('ItemDevision__button__hidden')}
     return (

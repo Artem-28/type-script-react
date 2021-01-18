@@ -1,5 +1,4 @@
 import { genID } from "../generationID/genID"
-import { IDevision } from "../interfaces/devision"
 import {IControl, IControlDate, IControlText, valueControlType} from "../interfaces/formControl"
 import { IValidation } from "../interfaces/validationControl"
 
@@ -50,22 +49,3 @@ export class MyControlDate extends MyControl implements IControlDate {
     }
 }
 
-/* export class MyControlSelectDevision implements IControlSelectDevision {
-    readonly id: number = genID()
-    value: IDevision | null
-    valid: boolean = false
-    touched: boolean = false
-    errorMessage: string = 'Поле не должно быть пустым'
-    validation: IValidation
-    label?: string
-    constructor (validation: IValidation, value:IDevision | null,  label?: string ){
-        this.validation = validation
-        this.value = value
-        this.label = label
-    }
-    clear(): void { 
-        this.value = null 
-        this.valid = false
-        this.touched = false
-    }
-} */
